@@ -10,7 +10,7 @@ int _putchar(char c);
 void *malloc_checked(unsigned int ab);
 char *string_nconcat(char *l1, char *l2, unsigned int n);
 int len(char *str);
-void *_calloc(unsigned int nmemb, unsigned int size);
+void *_calloc(unsigned int neleme, unsigned int size);
 int *array_range(int min, int max);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 int find_len(char *str);

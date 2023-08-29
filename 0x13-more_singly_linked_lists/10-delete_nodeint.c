@@ -1,39 +1,64 @@
 #include "lists.h"
 
 /**
- * delete_nodeint_at_index - Deletes a node in a linked list at a certain index.
- * @head: Pointer to the first element in the list.
- * @index: Index of the node to delete.
+ * delete_nodeint_at_index - Deletes a node at a given index.
+ * @head: Pointer to the head of the list.
+ * @index: Index of the node to be deleted.
  *
- * Return: 1 (Success), or -1 (Fail).
+ * Return: 1 if successful, -1 if an error occurred.
  */
 int delete_nodeint_at_index(listint_t **head, unsigned int index)
 {
-	listint_t *temp = *head;
-	listint_t *current = NULL;
-	unsigned int i = 0;
+	listint_t *old_node = NULL;
+	listint_t *previous_node = NULL;
+	unsigned int i = 0, list_len = listint_len(*head);
 
-	if (*head == NULL)
+	if ((index > list_len) || (list_len == 0))
 		return (-1);
 
-	if (index == 0)
+	while (*head != NULL)
 	{
-		*head = (*head)->next;
-		free(temp);
-		return (1);
-	}
+		if (i == index)
+		{
+			old_node = *head;
 
-	while (i < index - 1)
-	{
-		if (!temp || !(temp->next))
-			return (-1);
-		temp = temp->next;
+			if (i == 0)
+			{
+				*head = old_node->next;
+				free(old_node);
+				return (1);
+			}
+
+			previous_node->next = old_node->next;
+			free(old_node);
+			return (1);
+		}
+		else if ((i + 1) == index)
+			previous_node = *head;
+
+		head = &((*head)->next);
 		i++;
 	}
 
-	current = temp->next;
-	temp->next = current->next;
-	free(current);
+	return (-1);
+}
 
-	return (1);
+/**
+ * listint_len - Counts the number of nodes in a linked list.
+ * @h: Head of the list.
+ *
+ * Return: The number of elements.
+ */
+size_t listint_len(const listint_t *h)
+{
+	const listint_t *cursor = h;
+	size_t count = 0;
+
+	while (cursor != NULL)
+	{
+		count += 1;
+		cursor = cursor->next;
+	}
+
+	return (count);
 }
